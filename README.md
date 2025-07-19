@@ -1,6 +1,7 @@
-[![Android](https://github.com/judahben149/Eclair/actions/workflows/build.yml/badge.svg?job=android-build)](https://github.com/judahben149/Eclair/actions/workflows/build.yml)
-[![Desktop](https://github.com/judahben149/Eclair/actions/workflows/build.yml/badge.svg?job=desktop-build)](https://github.com/judahben149/Eclair/actions/workflows/build.yml)
-[![iOS](https://github.com/judahben149/Eclair/actions/workflows/build.yml/badge.svg?job=ios-build)](https://github.com/judahben149/Eclair/actions/workflows/build.yml)
+[![Android](https://img.shields.io/github/actions/workflow/status/judahben149/Eclair/build.yml?label=Android&branch=main)](https://github.com/judahben149/Eclair/actions/workflows/build.yml)
+[![Desktop](https://img.shields.io/github/actions/workflow/status/judahben149/Eclair/build.yml?label=Desktop&branch=main)](https://github.com/judahben149/Eclair/actions/workflows/build.yml)
+[![iOS](https://img.shields.io/github/actions/workflow/status/judahben149/Eclair/build.yml?label=iOS&branch=main)](https://github.com/judahben149/Eclair/actions/workflows/build.yml)
+
 
 This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
 

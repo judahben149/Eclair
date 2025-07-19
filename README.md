@@ -1,3 +1,7 @@
+[![Android](https://github.com/judahben149/Eclair/actions/workflows/build.yml/badge.svg?job=android-build)](https://github.com/judahben149/Eclair/actions/workflows/build.yml)
+[![Desktop](https://github.com/judahben149/Eclair/actions/workflows/build.yml/badge.svg?job=desktop-build)](https://github.com/judahben149/Eclair/actions/workflows/build.yml)
+[![iOS](https://github.com/judahben149/Eclair/actions/workflows/build.yml/badge.svg?job=ios-build)](https://github.com/judahben149/Eclair/actions/workflows/build.yml)
+
 This is a Kotlin Multiplatform project targeting Android, iOS, Desktop.
 
 * `/composeApp` is for code that will be shared across your Compose Multiplatform applications.

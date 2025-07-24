@@ -4,6 +4,6 @@ import com.judahben149.eclair.data.local.EclairDatabase
 import com.judahben149.eclair.data.local.getEclairDatabaseBuilder
 import org.koin.dsl.module
 
-actual fun platformModule() = module {
+fun platformModule() = module {
     single<EclairDatabase> { getEclairDatabaseBuilder() }
 }

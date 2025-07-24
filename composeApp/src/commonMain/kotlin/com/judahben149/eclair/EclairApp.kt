@@ -20,7 +20,7 @@ import eclair.composeapp.generated.resources.compose_multiplatform
 
 @Composable
 @Preview
-fun App() {
+fun EclairApp() {
     MaterialTheme {
         var showContent by remember { mutableStateOf(false) }
         Column(
@@ -33,10 +33,9 @@ fun App() {
                 Text("Click me!")
             }
             AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
                 Column(Modifier.fillMaxWidth(), horizontalAlignment = Alignment.CenterHorizontally) {
                     Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+                    Text("Compose: Hellooo")
                 }
             }
         }

@@ -5,7 +5,7 @@ import com.judahben149.eclair.domain.repository.ChatRepository
 
 class SaveChatUseCase(private val chatRepository: ChatRepository) {
 
-    operator fun invoke(chat: ChatMessage) {
+    suspend operator fun invoke(chat: ChatMessage) {
         chatRepository.saveChat(chat)
     }
 }

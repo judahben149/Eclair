@@ -31,7 +31,23 @@ kotlin {
         }
     }
     
-    jvm("desktop")
+    jvm("desktop") {
+        @OptIn(ExperimentalKotlinGradlePluginApi::class)
+        compilerOptions {
+            jvmTarget.set(JvmTarget.JVM_11)
+            freeCompilerArgs.add("-Xexpect-actual-classes")
+        }
+    }
+
+    targets.configureEach {
+        compilations.configureEach {
+            compileTaskProvider.configure {
+                compilerOptions {
+                    freeCompilerArgs.add("-Xexpect-actual-classes")
+                }
+            }
+        }
+    }
     
     sourceSets {
         val desktopMain by getting
@@ -100,10 +116,7 @@ room {
 
 dependencies {
     debugImplementation(compose.uiTooling)
-    add("kspAndroid", libs.room.compiler)
-    add("kspIosSimulatorArm64", libs.room.compiler)
-    add("kspIosX64", libs.room.compiler)
-    add("kspIosArm64", libs.room.compiler)
+    ksp(libs.room.compiler)
 }
 
 compose.desktop {

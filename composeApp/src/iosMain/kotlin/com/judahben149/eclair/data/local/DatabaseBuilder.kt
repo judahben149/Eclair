@@ -15,6 +15,6 @@ fun getEclairDatabaseBuilder(): EclairDatabase {
 //        factory = { EclairDatabase::class.instantiateImpl()}
     )
         .setDriver(BundledSQLiteDriver())
-        .setQueryCoroutineContext(Dispatchers.IO)
+//        .setQueryCoroutineContext(Dispatchers.IO)
         .build()
 }

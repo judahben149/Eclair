@@ -3,17 +3,19 @@ package com.judahben149.eclair.data.llm
 import com.judahben149.eclair.data.llm.impl.ApiLLMService
 import com.judahben149.eclair.data.llm.impl.DummyLLMService
 import com.judahben149.eclair.data.llm.impl.OnDeviceLLMService
+import com.judahben149.eclair.data.preferences.PreferencesDataStore
+import kotlinx.coroutines.flow.first
 
 class LLMServiceManager(
     private val onDeviceService: OnDeviceLLMService,
     private val apiService: ApiLLMService,
     private val dummyService: DummyLLMService,
-    private val preferences: UserPreferences
+    private val preferences: PreferencesDataStore
 ) {
     
-    fun getService(preferredType: LLMServiceType? = null): LLMService {
-        val serviceType = preferredType ?: preferences.getPreferredLLMService()
-        
+    suspend fun getService(preferredType: LLMServiceType? = null): LLMService {
+        val serviceType = preferredType ?: preferences.getPreferredLLMService().first()
+
         return when (serviceType) {
             LLMServiceType.ON_DEVICE -> {
                 if (onDeviceService.isAvailable()) onDeviceService

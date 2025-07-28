@@ -1,5 +1,6 @@
 package com.judahben149.eclair.data.llm
 
+import com.judahben149.eclair.core.utils.logI
 import com.judahben149.eclair.data.llm.impl.ApiLLMService
 import com.judahben149.eclair.data.llm.impl.DummyLLMService
 import com.judahben149.eclair.data.llm.impl.OnDeviceLLMService
@@ -18,15 +19,24 @@ class LLMServiceManager(
 
         return when (serviceType) {
             LLMServiceType.ON_DEVICE -> {
+                "Using OnDeviceService".logI()
                 if (onDeviceService.isAvailable()) onDeviceService
                 else getFallbackService()
             }
             LLMServiceType.API -> {
+                "Using ApiService".logI()
                 if (apiService.isAvailable()) apiService
                 else getFallbackService()
             }
-            LLMServiceType.DUMMY -> dummyService
+            LLMServiceType.DUMMY -> {
+                "Using DummyService".logI()
+                dummyService
+            }
         }
+    }
+
+    suspend fun setPreferredService(serviceType: LLMServiceType) {
+        preferences.setPreferredLLMService(serviceType)
     }
     
     private fun getFallbackService(): LLMService {

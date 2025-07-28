@@ -14,5 +14,6 @@ data class ChatMessageDto(
     val conversationId: String,
     val message: String,
     val origin: MessageOrigin,
-    val timestamp: Long = getCurrentTimeMillis()
+    val timestamp: Long = getCurrentTimeMillis(),
+    val isStreaming: Boolean = false
 )

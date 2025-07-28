@@ -2,8 +2,10 @@ package com.judahben149.eclair.presentation.screens.chat
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -40,13 +42,11 @@ fun ChatScreen() {
 fun ChatContent(state: ChatState, onSendMessage: (String) -> Unit) {
     val (text, setText) = remember { mutableStateOf("") }
 
-    Column(modifier = androidx.compose.ui.Modifier.fillMaxWidth()) {
-        Column(modifier = androidx.compose.ui.Modifier.weight(1f)) {
-            state.chats.forEach { chat ->
-                Text(
-                    text = chat.message,
-                    modifier = androidx.compose.ui.Modifier.padding(8.dp)
-                )
+    Column(modifier = androidx.compose.ui.Modifier.fillMaxSize()) {
+        LazyColumn(modifier = androidx.compose.ui.Modifier.weight(1f)) {
+            items(state.chats.size) { index ->
+                val chat = state.chats[index]
+                ChatItem(chat = chat)
             }
         }
 
@@ -65,6 +65,14 @@ fun ChatContent(state: ChatState, onSendMessage: (String) -> Unit) {
             }) { Text("Send") }
         }
     }
+}
+
+@Composable
+fun ChatItem(chat: ChatMessage) {
+    Text(
+        text = chat.message + if (chat.isStreaming) "..." else "",
+        modifier = androidx.compose.ui.Modifier.padding(8.dp)
+    )
 }
 
 

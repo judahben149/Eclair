@@ -19,6 +19,9 @@ interface ChatDao {
     @Query("SELECT * FROM chatmessagedto WHERE conversationId = :conversationId")
     suspend fun getChatByConversationId(conversationId: String): ChatMessageDto?
 
+    @Query("SELECT * FROM chatmessagedto WHERE conversationId = :conversationId")
+    suspend fun getConversationHistory(conversationId: String): List<ChatMessageDto>
+
     @Query("SELECT * FROM chatmessagedto")
     suspend fun getAllChats(): List<ChatMessageDto>
 

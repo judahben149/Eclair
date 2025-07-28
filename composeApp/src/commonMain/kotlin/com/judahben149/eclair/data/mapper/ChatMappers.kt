@@ -8,7 +8,8 @@ fun ChatMessage.toChatMessageEntity(): ChatMessageDto {
         conversationId = conversationId,
         message = message,
         origin = origin,
-        timestamp = timestamp
+        timestamp = timestamp,
+        isStreaming = isStreaming
     )
 }
 

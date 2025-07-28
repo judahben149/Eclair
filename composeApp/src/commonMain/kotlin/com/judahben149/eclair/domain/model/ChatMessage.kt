@@ -7,5 +7,6 @@ data class ChatMessage(
     val conversationId: String,
     val message: String,
     val origin: MessageOrigin,
-    val timestamp: Long
+    val timestamp: Long,
+    val isStreaming: Boolean = false
 )

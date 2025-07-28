@@ -20,9 +20,10 @@ class DummyLLMService : LLMService {
         conversationHistory: List<ChatMessage>
     ): Flow<String> = flow {
         val response = responses.random()
+//        emit(response)
         response.forEach { char ->
             emit(char.toString())
-            delay(10) // Simulate typing
+            delay(3) // Simulate typing
         }
     }
     

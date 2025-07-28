@@ -1,22 +1,23 @@
 package com.judahben149.eclair.presentation.screens.chat
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Button
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
+import androidx.compose.foundation.layout.ime
+import androidx.compose.foundation.layout.systemBars
+import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.Modifier
+import com.judahben149.eclair.data.local.dto.getCurrentTimeMillis
 import com.judahben149.eclair.domain.enums.MessageOrigin
 import com.judahben149.eclair.domain.model.ChatMessage
+import com.judahben149.eclair.presentation.screens.chat.components.ChatHeader
+import com.judahben149.eclair.presentation.screens.chat.components.ChatMessagesList
+import com.judahben149.eclair.presentation.screens.chat.components.MessageInputArea
 import org.jetbrains.compose.ui.tooling.preview.Preview
 import org.koin.compose.viewmodel.koinViewModel
 
@@ -25,59 +26,81 @@ fun ChatScreen() {
     val viewModel = koinViewModel<ChatViewModel>()
     val state by viewModel.state.collectAsState()
 
-    ChatContent(state) {
-        viewModel.saveChat(
-            ChatMessage(
-                id = "",
-                conversationId = "conversationId",
-                message = it,
-                origin = MessageOrigin.SENT,
-                timestamp = 0
+    ChatScreenContent(
+        messages = state.chats,
+        onSendMessage = { message ->
+            viewModel.saveChat(
+                ChatMessage(
+                    id = "",
+                    conversationId = "conversationId",
+                    message = message,
+                    origin = MessageOrigin.SENT,
+                    timestamp = getCurrentTimeMillis()
+                )
             )
+        }
+    )
+}
+
+@Composable
+fun ChatScreenContent(
+    messages: List<ChatMessage>,
+    onSendMessage: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .windowInsetsPadding(WindowInsets.systemBars)
+            .windowInsetsPadding(WindowInsets.ime)
+            .background(MaterialTheme.colorScheme.background)
+    ) {
+
+        ChatHeader()
+
+        ChatMessagesList(
+            messages = messages,
+            modifier = Modifier.weight(1f)
+        )
+
+        MessageInputArea(
+            onSendMessage = onSendMessage
         )
     }
 }
 
-@Composable
-fun ChatContent(state: ChatState, onSendMessage: (String) -> Unit) {
-    val (text, setText) = remember { mutableStateOf("") }
-
-    Column(modifier = androidx.compose.ui.Modifier.fillMaxSize()) {
-        LazyColumn(modifier = androidx.compose.ui.Modifier.weight(1f)) {
-            items(state.chats.size) { index ->
-                val chat = state.chats[index]
-                ChatItem(chat = chat)
-            }
-        }
-
-        Row(modifier = androidx.compose.ui.Modifier.fillMaxWidth().padding(8.dp)) {
-            TextField(
-                value = text,
-                onValueChange = setText,
-                label = { Text("New Chat") },
-                modifier = androidx.compose.ui.Modifier.weight(1f).padding(end = 8.dp)
-            )
-            Button(onClick = {
-                if (text.isNotBlank()) {
-                    onSendMessage(text)
-                    setText("")
-                }
-            }) { Text("Send") }
-        }
-    }
-}
-
-@Composable
-fun ChatItem(chat: ChatMessage) {
-    Text(
-        text = chat.message + if (chat.isStreaming) "..." else "",
-        modifier = androidx.compose.ui.Modifier.padding(8.dp)
-    )
-}
-
-
 @Preview
 @Composable
 fun ChatScreenPreview() {
-    ChatScreen()
+    MaterialTheme {
+        val sampleMessages = listOf(
+            ChatMessage(
+                id = "1",
+                conversationId = "conv1",
+                message = "Hello! How can I help you today?",
+                origin = MessageOrigin.RECEIVED,
+                timestamp = getCurrentTimeMillis() - 60000
+            ),
+            ChatMessage(
+                id = "2",
+                conversationId = "conv1",
+                message = "I need help with my Compose Multiplatform project",
+                origin = MessageOrigin.SENT,
+                timestamp = getCurrentTimeMillis() - 30000
+            ),
+            ChatMessage(
+                id = "3",
+                conversationId = "conv1",
+                message = "I'd be happy to help! What specific issue are you facing with your Compose Multiplatform project?",
+                origin = MessageOrigin.RECEIVED,
+                timestamp = getCurrentTimeMillis(),
+                isStreaming = true
+            )
+        )
+
+        ChatScreenContent(
+            messages = sampleMessages,
+            onSendMessage = { }
+        )
+    }
 }

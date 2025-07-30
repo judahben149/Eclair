@@ -3,6 +3,7 @@ package com.judahben149.eclair.data.llm.impl
 import com.judahben149.eclair.data.llm.LLMService
 import com.judahben149.eclair.data.llm.LLMServiceType
 import com.judahben149.eclair.domain.model.ChatMessage
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -17,7 +18,8 @@ class DummyLLMService : LLMService {
     
     override suspend fun sendMessage(
         message: String, 
-        conversationHistory: List<ChatMessage>
+        conversationHistory: List<ChatMessage>,
+        coroutineScope: CoroutineScope
     ): Flow<String> = flow {
         val response = responses.random()
 //        emit(response)

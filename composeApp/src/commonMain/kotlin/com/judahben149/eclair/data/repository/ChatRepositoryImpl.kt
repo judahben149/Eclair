@@ -12,6 +12,9 @@ import com.judahben149.eclair.data.mapper.toChatMessageEntity
 import com.judahben149.eclair.domain.enums.MessageOrigin
 import com.judahben149.eclair.domain.model.ChatMessage
 import com.judahben149.eclair.domain.repository.ChatRepository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
@@ -20,6 +23,9 @@ class ChatRepositoryImpl(
     private val database: EclairDatabase,
     private val llmServiceManager: LLMServiceManager
 ): ChatRepository {
+
+    private val coroutineScope = CoroutineScope(SupervisorJob() + Dispatchers.Main.immediate)
+
     override fun onNewChatResponse(chat: ChatMessage) {
         TODO("Not yet implemented")
     }
@@ -71,7 +77,7 @@ class ChatRepositoryImpl(
             isStreaming = true
         )
 
-        llmService.sendMessage(message, history).collect { chunk ->
+        llmService.sendMessage(message, history, coroutineScope).collect { chunk ->
             responseChat = responseChat.copy(
                 message = responseChat.message + chunk,
                 isStreaming = chunk.isNotEmpty()

@@ -2,6 +2,7 @@ package com.judahben149.eclair
 
 import android.app.Application
 import com.judahben149.eclair.di.dataStoreModule
+import com.judahben149.eclair.di.mobileModule
 import com.judahben149.eclair.di.platformModule
 import com.judahben149.eclair.di.sharedModules
 import org.koin.android.ext.koin.androidContext
@@ -15,7 +16,7 @@ class AndroidApplication: Application() {
         super.onCreate()
 
         startKoin {
-            modules(sharedModules + androidModules)
+            modules(sharedModules + androidModules + mobileModule)
 
             androidContext(this@AndroidApplication)
         }

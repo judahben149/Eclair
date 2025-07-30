@@ -33,6 +33,7 @@ val viewModelModule = module {
 val serviceModule = module {
     singleOf(::DummyLLMService).bind(LLMService::class)
     singleOf(::OnDeviceLLMService).bind(LLMService::class)
+    single<LLMService>{ OnDeviceLLMService(get(), get()) }
     singleOf(::ApiLLMService).bind(LLMService::class)
     singleOf(::LLMServiceManager)
 }

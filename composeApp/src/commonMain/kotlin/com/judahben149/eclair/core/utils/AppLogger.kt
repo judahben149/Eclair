@@ -8,4 +8,4 @@ expect object AppLogger {
 
 fun String.logE(throwable: Throwable? = null) = AppLogger.e("", this, throwable)
 fun String.logD() = AppLogger.d("", this)
-fun String.logI() = AppLogger.i("", this)
+fun String.logI() = AppLogger.i("Yoo", this)

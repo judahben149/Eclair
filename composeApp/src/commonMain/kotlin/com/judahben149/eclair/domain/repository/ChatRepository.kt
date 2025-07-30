@@ -16,7 +16,7 @@ interface ChatRepository {
     suspend fun sendMessageAndSave(
         message: String,
         conversationId: String,
-        serviceType: LLMServiceType = LLMServiceType.DUMMY
+        serviceType: LLMServiceType = LLMServiceType.ON_DEVICE
     ): Flow<ChatMessage>
 
 }

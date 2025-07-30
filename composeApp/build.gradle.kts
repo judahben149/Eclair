@@ -11,6 +11,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.kotlinCocoapods)
+//    alias(libs.ktensorflow.link)
 }
 
 kotlin {
@@ -20,13 +21,13 @@ kotlin {
             jvmTarget.set(JvmTarget.JVM_11)
         }
     }
-    
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+
+    val iosX64 = iosX64()
+    val iosArm64 = iosArm64()
+    val iosSimulatorArm64 = iosSimulatorArm64()
+
+    configure(listOf(iosX64, iosArm64, iosSimulatorArm64)) {
+        binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
         }
@@ -49,15 +50,48 @@ kotlin {
             }
         }
     }
+
+
+    cocoapods {
+        summary = "Eclair"
+        homepage = "https://github.com/judahben149/Eclair"
+        version = "1.0"
+        ios.deploymentTarget = "16.0"
+        framework {
+            baseName = "ComposeApp"
+            isStatic = true
+        }
+    }
     
     sourceSets {
         val desktopMain by getting
-        
-        androidMain.dependencies {
-            implementation(compose.preview)
-            implementation(libs.androidx.activity.compose)
-            implementation(libs.room.runtime.android)
+
+        val mobileMain by creating {
+        dependsOn(commonMain.get())
+        dependencies {
+            implementation(libs.ktensorflow.core)
+            implementation(libs.ktensorflow.moko)
         }
+    }
+
+        val androidMain by getting {
+            dependsOn(mobileMain)
+            dependencies {
+                implementation(compose.preview)
+                implementation(libs.androidx.activity.compose)
+                implementation(libs.room.runtime.android)
+            }
+        }
+
+        val iosMain by creating {
+            dependsOn(mobileMain)
+        }
+
+        // Link individual targets to shared iosMain
+        val iosX64Main by getting { dependsOn(iosMain) }
+        val iosArm64Main by getting { dependsOn(iosMain) }
+        val iosSimulatorArm64Main by getting { dependsOn(iosMain) }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)

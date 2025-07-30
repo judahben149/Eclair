@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
+    alias(libs.plugins.kotlinCocoapods)
 }
 
 kotlin {

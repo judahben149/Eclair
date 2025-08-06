@@ -21,6 +21,7 @@ sqlite = "2.5.2"
 room = "2.7.2"
 datastore = "1.1.7"
 ktensorflow = "0.2"
+okio = "3.10.2"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -42,6 +43,8 @@ datastore-preferences-core = { module = "androidx.datastore:datastore-preference
 koin-compose = { module = "io.insert-koin:koin-compose", version.ref = "koin" }
 koin-compose-viewmodel = { module = "io.insert-koin:koin-compose-viewmodel", version.ref = "koin" }
 koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose-viewmodel-navigation", version.ref = "koin" }
+
+okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 
 ktensorflow-core = { module = "dev.kursor.ktensorflow:ktensorflow-core", version.ref = "ktensorflow" }
 ktensorflow-moko = { module = "dev.kursor.ktensorflow:ktensorflow-moko", version.ref = "ktensorflow" }

@@ -30,6 +30,8 @@ class OnDeviceLLMService(
             "Model loaded".logI()
         }
 
+        val result = mlEngine.predict(coroutineScope, floatArrayOf(1f, 2f, 3f))
+        result.toString().logI()
         return emptyFlow()
     }
 

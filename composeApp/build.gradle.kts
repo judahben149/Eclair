@@ -110,6 +110,7 @@ kotlin {
             implementation(libs.sqlite.bundled)
             implementation(libs.datastore.preferences)
             implementation(libs.datastore.preferences.core)
+            implementation(libs.okio)
 
         }
         commonTest.dependencies {

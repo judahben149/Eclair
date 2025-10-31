@@ -22,6 +22,7 @@ room = "2.7.2"
 datastore = "1.1.7"
 ktensorflow = "0.2"
 okio = "3.10.2"
+cactus = "0.3.6-beta"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -53,6 +54,7 @@ room-compiler = { group = "androidx.room", name = "room-compiler", version.ref =
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
+cactus-inferencer = { module = "com.cactus:library", version.ref = "cactus" }
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }

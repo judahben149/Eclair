@@ -71,6 +71,8 @@ kotlin {
         dependencies {
             implementation(libs.ktensorflow.core)
             implementation(libs.ktensorflow.moko)
+
+            implementation(libs.cactus.inferencer)
         }
     }
 

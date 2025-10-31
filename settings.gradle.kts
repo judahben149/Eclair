@@ -1,3 +1,11 @@
+import java.util.Properties
+
+val properties = Properties()
+val localPropertiesFile = file("local.properties")
+if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { properties.load(it) }
+}
+
 rootProject.name = "Eclair"
 enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 
@@ -26,6 +34,14 @@ dependencyResolutionManagement {
         }
         mavenCentral()
         maven("https://jitpack.io")
+        maven {
+            name = "GitHubPackagesCactus"
+            url = uri("https://maven.pkg.github.com/cactus-compute/cactus-kotlin")
+            credentials {
+                username = properties.getProperty("github.username") ?: System.getenv("GITHUB_ACTOR")
+                password = properties.getProperty("github.token") ?: System.getenv("GITHUB_TOKEN")
+            }
+        }
     }
 }
 

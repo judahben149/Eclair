@@ -36,7 +36,7 @@ class OnDeviceLLMService(
     }
 
     override fun isAvailable(): Boolean {
-        return platform.type != PlatformType.Desktop
+        return true
     }
 
     override val serviceType: LLMServiceType

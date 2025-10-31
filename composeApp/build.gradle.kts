@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -32,14 +31,6 @@ kotlin {
             isStatic = true
         }
     }
-    
-    jvm("desktop") {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-            freeCompilerArgs.add("-Xexpect-actual-classes")
-        }
-    }
 
     targets.configureEach {
         compilations.configureEach {
@@ -64,8 +55,6 @@ kotlin {
     }
     
     sourceSets {
-        val desktopMain by getting
-
         val mobileMain by creating {
         dependsOn(commonMain.get())
         dependencies {
@@ -118,10 +107,6 @@ kotlin {
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutinesSwing)
-        }
     }
 }
 
@@ -159,16 +144,4 @@ room {
 dependencies {
     debugImplementation(compose.uiTooling)
     ksp(libs.room.compiler)
-}
-
-compose.desktop {
-    application {
-        mainClass = "com.judahben149.eclair.MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.judahben149.eclair"
-            packageVersion = "1.0.0"
-        }
-    }
 }

@@ -81,8 +81,8 @@ kotlin {
             implementation(libs.datastore.preferences.core)
             implementation(libs.okio)
 
-            implementation(libs.ktensorflow.core)
-            implementation(libs.ktensorflow.moko)
+//            implementation(libs.ktensorflow.core)
+//            implementation(libs.ktensorflow.moko)
             implementation(libs.cactus.inferencer)
         }
 

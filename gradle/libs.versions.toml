@@ -20,7 +20,7 @@ ksp = "2.2.0-2.0.2"
 sqlite = "2.5.2"
 room = "2.7.2"
 datastore = "1.1.7"
-ktensorflow = "0.2"
+#ktensorflow = "0.2"
 okio = "3.10.2"
 cactus = "0.3.6-beta"
 
@@ -47,8 +47,8 @@ koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose-view
 
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 
-ktensorflow-core = { module = "dev.kursor.ktensorflow:ktensorflow-core", version.ref = "ktensorflow" }
-ktensorflow-moko = { module = "dev.kursor.ktensorflow:ktensorflow-moko", version.ref = "ktensorflow" }
+#ktensorflow-core = { module = "dev.kursor.ktensorflow:ktensorflow-core", version.ref = "ktensorflow" }
+#ktensorflow-moko = { module = "dev.kursor.ktensorflow:ktensorflow-moko", version.ref = "ktensorflow" }
 
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
@@ -66,4 +66,4 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
-ktensorflow-link = { id = "dev.kursor.ktensorflow.link", version.ref = "ktensorflow" }
+#ktensorflow-link = { id = "dev.kursor.ktensorflow.link", version.ref = "ktensorflow" }

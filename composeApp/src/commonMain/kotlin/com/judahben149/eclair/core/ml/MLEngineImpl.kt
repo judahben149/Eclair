@@ -1,11 +1,11 @@
 package com.judahben149.eclair.core.ml
 
-import com.judahben149.eclair.core.utils.ResourceFileRetriever
+import com.cactus.CactusLM
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class MLEngineImpl(
-    private val resourceFileRetriever: ResourceFileRetriever
+    private val cactus: CactusLM
 ) : MLEngine {
 
     override suspend fun loadModel(coroutineScope: CoroutineScope) {

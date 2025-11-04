@@ -5,7 +5,6 @@ import com.judahben149.eclair.core.ml.MLEngine
 import com.judahben149.eclair.core.utils.logI
 import com.judahben149.eclair.data.llm.LLMService
 import com.judahben149.eclair.data.llm.LLMServiceType
-import com.judahben149.eclair.domain.enums.PlatformType
 import com.judahben149.eclair.domain.model.ChatMessage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.flow.Flow

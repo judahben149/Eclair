@@ -55,33 +55,11 @@ kotlin {
     }
     
     sourceSets {
-        val mobileMain by creating {
-        dependsOn(commonMain.get())
-        dependencies {
-            implementation(libs.ktensorflow.core)
-            implementation(libs.ktensorflow.moko)
-
-            implementation(libs.cactus.inferencer)
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.room.runtime.android)
         }
-    }
-
-        val androidMain by getting {
-            dependsOn(mobileMain)
-            dependencies {
-                implementation(compose.preview)
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.room.runtime.android)
-            }
-        }
-
-        val iosMain by creating {
-            dependsOn(mobileMain)
-        }
-
-        // Link individual targets to shared iosMain
-        val iosX64Main by getting { dependsOn(iosMain) }
-        val iosArm64Main by getting { dependsOn(iosMain) }
-        val iosSimulatorArm64Main by getting { dependsOn(iosMain) }
 
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -103,7 +81,11 @@ kotlin {
             implementation(libs.datastore.preferences.core)
             implementation(libs.okio)
 
+            implementation(libs.ktensorflow.core)
+            implementation(libs.ktensorflow.moko)
+            implementation(libs.cactus.inferencer)
         }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
         }

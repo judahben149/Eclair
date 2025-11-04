@@ -1,5 +1,7 @@
 package com.judahben149.eclair.di
 
+import com.judahben149.eclair.core.ml.MLEngine
+import com.judahben149.eclair.core.ml.MLEngineImpl
 import com.judahben149.eclair.data.llm.LLMService
 import com.judahben149.eclair.data.llm.LLMServiceManager
 import com.judahben149.eclair.data.llm.impl.ApiLLMService
@@ -38,6 +40,10 @@ val serviceModule = module {
     singleOf(::LLMServiceManager)
 }
 
+val mlModule = module {
+    single<MLEngine> { MLEngineImpl(get()) }
+}
+
 val sharedModules = listOf(
-    repositoryModule, useCaseModule, viewModelModule, serviceModule
+    repositoryModule, useCaseModule, viewModelModule, serviceModule, mlModule
 )

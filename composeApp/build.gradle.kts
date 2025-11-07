@@ -10,6 +10,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.kotlinCocoapods)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 kotlin {
@@ -81,6 +82,10 @@ kotlin {
             implementation(libs.okio)
 
 //            implementation(libs.cactus.inferencer)
+
+            implementation(libs.decompose)
+            implementation(libs.decompose.compose)
+            implementation(libs.kotlinx.serialization.core)
         }
 
         commonTest.dependencies {

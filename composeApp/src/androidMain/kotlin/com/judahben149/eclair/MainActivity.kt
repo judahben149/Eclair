@@ -6,17 +6,21 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.cactus.CactusContextInitializer
+import com.arkivanov.decompose.defaultComponentContext
+import com.judahben149.eclair.navigation.DefaultRootComponent
+//import com.cactus.CactusContextInitializer
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
         super.onCreate(savedInstanceState)
 
-        CactusContextInitializer.initialize(this)
+//        CactusContextInitializer.initialize(this)
+
+        val rootComponent = DefaultRootComponent(defaultComponentContext())
 
         setContent {
-            EclairApp()
+            EclairApp(rootComponent)
         }
     }
 }
@@ -24,5 +28,6 @@ class MainActivity : ComponentActivity() {
 @Preview
 @Composable
 fun AppAndroidPreview() {
-    EclairApp()
+    // Note: Preview won't work without a proper ComponentContext
+    // For preview, you'd need to create a fake component or mock
 }

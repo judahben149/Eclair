@@ -9,7 +9,6 @@ plugins {
     alias(libs.plugins.composeHotReload)
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
-    alias(libs.plugins.kotlinCocoapods)
     alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
@@ -42,19 +41,6 @@ kotlin {
         }
     }
 
-
-    cocoapods {
-        summary = "Eclair"
-        homepage = "https://github.com/judahben149/Eclair"
-        version = "1.0"
-        ios.deploymentTarget = "16.0"
-        framework {
-            baseName = "ComposeApp"
-            isStatic = true
-        }
-        extraSpecAttributes["frameworks"] = "['Accelerate']"
-    }
-    
     sourceSets {
         androidMain.dependencies {
             implementation(compose.preview)
@@ -82,7 +68,7 @@ kotlin {
             implementation(libs.datastore.preferences.core)
             implementation(libs.okio)
 
-            implementation(libs.cactus.inferencer)
+//            implementation(libs.cactus.inferencer)
 
             implementation(libs.decompose)
             implementation(libs.decompose.compose)

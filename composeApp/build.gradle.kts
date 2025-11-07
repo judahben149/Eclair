@@ -52,6 +52,7 @@ kotlin {
             baseName = "ComposeApp"
             isStatic = true
         }
+        extraSpecAttributes["frameworks"] = "['Accelerate']"
     }
     
     sourceSets {
@@ -81,7 +82,7 @@ kotlin {
             implementation(libs.datastore.preferences.core)
             implementation(libs.okio)
 
-//            implementation(libs.cactus.inferencer)
+            implementation(libs.cactus.inferencer)
 
             implementation(libs.decompose)
             implementation(libs.decompose.compose)

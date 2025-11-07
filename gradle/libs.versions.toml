@@ -1,6 +1,6 @@
 [versions]
 agp = "8.7.3"
-android-compileSdk = "35"
+android-compileSdk = "36"
 android-minSdk = "24"
 android-targetSdk = "35"
 androidx-activity = "1.10.1"
@@ -20,9 +20,12 @@ ksp = "2.2.0-2.0.2"
 sqlite = "2.5.2"
 room = "2.7.2"
 datastore = "1.1.7"
-ktensorflow = "0.2"
 okio = "3.10.2"
-cactus = "0.3.6-beta"
+#cactus = "0.3.6-beta"
+kotlinSerialization = "2.2.0"
+kotlinxSerializationCore = "1.9.0"
+decompose = "3.2.0"
+decomposeExtensions = "3.2.0"
 
 [libraries]
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
@@ -47,14 +50,16 @@ koin-compose-viewmodel-navigation = { module = "io.insert-koin:koin-compose-view
 
 okio = { module = "com.squareup.okio:okio", version.ref = "okio" }
 
-ktensorflow-core = { module = "dev.kursor.ktensorflow:ktensorflow-core", version.ref = "ktensorflow" }
-ktensorflow-moko = { module = "dev.kursor.ktensorflow:ktensorflow-moko", version.ref = "ktensorflow" }
-
 room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
 room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
 room-runtime-android = { group = "androidx.room", name = "room-runtime-android", version.ref = "room" }
 sqlite-bundled = { module = "androidx.sqlite:sqlite-bundled", version.ref = "sqlite" }
-cactus-inferencer = { module = "com.cactus:library", version.ref = "cactus" }
+#cactus-inferencer = { module = "com.cactus:library", version.ref = "cactus" }
+
+kotlinx-serialization-core = { module = "org.jetbrains.kotlinx:kotlinx-serialization-core", version.ref = "kotlinxSerializationCore" }
+decompose = { module = "com.arkivanov.decompose:decompose", version.ref = "decompose" }
+decompose-compose = { module = "com.arkivanov.decompose:extensions-compose", version.ref = "decomposeExtensions" }
+
 
 [plugins]
 androidApplication = { id = "com.android.application", version.ref = "agp" }
@@ -66,4 +71,5 @@ kotlinMultiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref =
 kotlinCocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 room = { id = "androidx.room", version.ref = "room" }
-ktensorflow-link = { id = "dev.kursor.ktensorflow.link", version.ref = "ktensorflow" }
+
+jetbrains-kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlinSerialization"}

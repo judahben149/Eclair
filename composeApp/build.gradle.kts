@@ -1,4 +1,3 @@
-import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
@@ -11,7 +10,7 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.kotlinCocoapods)
-//    alias(libs.ktensorflow.link)
+    alias(libs.plugins.jetbrains.kotlin.serialization)
 }
 
 kotlin {
@@ -30,14 +29,6 @@ kotlin {
         binaries.framework {
             baseName = "ComposeApp"
             isStatic = true
-        }
-    }
-    
-    jvm("desktop") {
-        @OptIn(ExperimentalKotlinGradlePluginApi::class)
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-            freeCompilerArgs.add("-Xexpect-actual-classes")
         }
     }
 
@@ -64,35 +55,11 @@ kotlin {
     }
     
     sourceSets {
-        val desktopMain by getting
-
-        val mobileMain by creating {
-        dependsOn(commonMain.get())
-        dependencies {
-            implementation(libs.ktensorflow.core)
-            implementation(libs.ktensorflow.moko)
-
-            implementation(libs.cactus.inferencer)
+        androidMain.dependencies {
+            implementation(compose.preview)
+            implementation(libs.androidx.activity.compose)
+            implementation(libs.room.runtime.android)
         }
-    }
-
-        val androidMain by getting {
-            dependsOn(mobileMain)
-            dependencies {
-                implementation(compose.preview)
-                implementation(libs.androidx.activity.compose)
-                implementation(libs.room.runtime.android)
-            }
-        }
-
-        val iosMain by creating {
-            dependsOn(mobileMain)
-        }
-
-        // Link individual targets to shared iosMain
-        val iosX64Main by getting { dependsOn(iosMain) }
-        val iosArm64Main by getting { dependsOn(iosMain) }
-        val iosSimulatorArm64Main by getting { dependsOn(iosMain) }
 
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -114,13 +81,15 @@ kotlin {
             implementation(libs.datastore.preferences.core)
             implementation(libs.okio)
 
+//            implementation(libs.cactus.inferencer)
+
+            implementation(libs.decompose)
+            implementation(libs.decompose.compose)
+            implementation(libs.kotlinx.serialization.core)
         }
+
         commonTest.dependencies {
             implementation(libs.kotlin.test)
-        }
-        desktopMain.dependencies {
-            implementation(compose.desktop.currentOs)
-            implementation(libs.kotlinx.coroutinesSwing)
         }
     }
 }
@@ -159,16 +128,4 @@ room {
 dependencies {
     debugImplementation(compose.uiTooling)
     ksp(libs.room.compiler)
-}
-
-compose.desktop {
-    application {
-        mainClass = "com.judahben149.eclair.MainKt"
-
-        nativeDistributions {
-            targetFormats(TargetFormat.Dmg, TargetFormat.Msi, TargetFormat.Deb)
-            packageName = "com.judahben149.eclair"
-            packageVersion = "1.0.0"
-        }
-    }
 }

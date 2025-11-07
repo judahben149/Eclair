@@ -16,6 +16,10 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.arkivanov.decompose.extensions.compose.stack.Children
+import com.arkivanov.decompose.extensions.compose.stack.animation.fade
+import com.arkivanov.decompose.extensions.compose.stack.animation.plus
+import com.arkivanov.decompose.extensions.compose.stack.animation.scale
+import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.judahben149.eclair.navigation.BottomTab
 import com.judahben149.eclair.navigation.RootComponent
@@ -44,7 +48,8 @@ fun RootContent(component: RootComponent) {
     ) { paddingValues ->
         Children(
             stack = childStack,
-            modifier = Modifier.padding(paddingValues)
+            modifier = Modifier.padding(paddingValues),
+            animation = stackAnimation(fade() + scale())
         ) { child ->
             when (val instance = child.instance) {
                 is RootComponent.Child.Studio -> StudioScreen(instance.component)

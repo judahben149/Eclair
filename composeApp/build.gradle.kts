@@ -10,7 +10,6 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.room)
     alias(libs.plugins.kotlinCocoapods)
-//    alias(libs.ktensorflow.link)
 }
 
 kotlin {
@@ -81,9 +80,7 @@ kotlin {
             implementation(libs.datastore.preferences.core)
             implementation(libs.okio)
 
-//            implementation(libs.ktensorflow.core)
-//            implementation(libs.ktensorflow.moko)
-            implementation(libs.cactus.inferencer)
+//            implementation(libs.cactus.inferencer)
         }
 
         commonTest.dependencies {

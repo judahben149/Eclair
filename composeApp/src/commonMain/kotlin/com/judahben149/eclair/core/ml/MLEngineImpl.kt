@@ -1,11 +1,11 @@
 package com.judahben149.eclair.core.ml
 
-import com.cactus.CactusLM
+//import com.cactus.CactusLM
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class MLEngineImpl(
-    private val cactus: CactusLM
+//    private val cactus: CactusLM
 ) : MLEngine {
 
     override suspend fun loadModel(coroutineScope: CoroutineScope) {

@@ -1,6 +1,6 @@
 package com.judahben149.eclair.di
 
-import com.cactus.CactusLM
+//import com.cactus.CactusLM
 import com.judahben149.eclair.core.ml.MLEngine
 import com.judahben149.eclair.core.ml.MLEngineImpl
 import com.judahben149.eclair.data.llm.LLMService
@@ -39,11 +39,15 @@ val serviceModule = module {
     single<LLMService>{ OnDeviceLLMService(get(), get()) }
     singleOf(::ApiLLMService).bind(LLMService::class)
     singleOf(::LLMServiceManager)
-    single { CactusLM() }
+//    single { CactusLM() }
 }
 
 val mlModule = module {
-    single<MLEngine> { MLEngineImpl(get()) }
+    single<MLEngine> {
+        MLEngineImpl(
+//            get()
+        )
+    }
 }
 
 val sharedModules = listOf(

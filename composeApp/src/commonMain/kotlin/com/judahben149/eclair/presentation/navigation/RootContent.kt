@@ -1,5 +1,8 @@
 package com.judahben149.eclair.presentation.navigation
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.slideInVertically
+import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Explore
@@ -23,6 +26,7 @@ import com.arkivanov.decompose.extensions.compose.stack.animation.stackAnimation
 import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.judahben149.eclair.navigation.BottomTab
 import com.judahben149.eclair.navigation.RootComponent
+import com.judahben149.eclair.navigation.StudioComponent
 import com.judahben149.eclair.presentation.screens.explore.ExploreScreen
 import com.judahben149.eclair.presentation.screens.review.ReviewScreen
 import com.judahben149.eclair.presentation.screens.studio.StudioScreen
@@ -33,17 +37,31 @@ fun RootContent(component: RootComponent) {
     val childStack by component.childStack.subscribeAsState()
     val activeChild = childStack.active.instance
 
+    // Check if we're on a nested screen in Studio
+    val showBottomBar = if (activeChild is RootComponent.Child.Studio) {
+        val studioStack by activeChild.component.childStack.subscribeAsState()
+        studioStack.active.instance is StudioComponent.Child.Home
+    } else {
+        true
+    }
+
     Scaffold(
         bottomBar = {
-            BottomNavigationBar(
-                currentTab = when (activeChild) {
-                    is RootComponent.Child.Studio -> BottomTab.STUDIO
-                    is RootComponent.Child.Train -> BottomTab.TRAIN
-                    is RootComponent.Child.Review -> BottomTab.REVIEW
-                    is RootComponent.Child.Explore -> BottomTab.EXPLORE
-                },
-                onTabSelected = component::onTabSelected
-            )
+            AnimatedVisibility(
+                visible = showBottomBar,
+                enter = slideInVertically(initialOffsetY = { it }),
+                exit = slideOutVertically(targetOffsetY = { it })
+            ) {
+                BottomNavigationBar(
+                    currentTab = when (activeChild) {
+                        is RootComponent.Child.Studio -> BottomTab.STUDIO
+                        is RootComponent.Child.Train -> BottomTab.TRAIN
+                        is RootComponent.Child.Review -> BottomTab.REVIEW
+                        is RootComponent.Child.Explore -> BottomTab.EXPLORE
+                    },
+                    onTabSelected = component::onTabSelected
+                )
+            }
         }
     ) { paddingValues ->
         Children(

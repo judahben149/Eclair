@@ -27,6 +27,7 @@ import com.arkivanov.decompose.extensions.compose.subscribeAsState
 import com.judahben149.eclair.navigation.BottomTab
 import com.judahben149.eclair.navigation.RootComponent
 import com.judahben149.eclair.navigation.StudioComponent
+import com.judahben149.eclair.navigation.TrainComponent
 import com.judahben149.eclair.presentation.screens.explore.ExploreScreen
 import com.judahben149.eclair.presentation.screens.review.ReviewScreen
 import com.judahben149.eclair.presentation.screens.studio.StudioScreen
@@ -37,12 +38,17 @@ fun RootContent(component: RootComponent) {
     val childStack by component.childStack.subscribeAsState()
     val activeChild = childStack.active.instance
 
-    // Check if we're on a nested screen in Studio
-    val showBottomBar = if (activeChild is RootComponent.Child.Studio) {
-        val studioStack by activeChild.component.childStack.subscribeAsState()
-        studioStack.active.instance is StudioComponent.Child.Home
-    } else {
-        true
+    // Check if we're on a nested screen in Studio or Train
+    val showBottomBar = when (activeChild) {
+        is RootComponent.Child.Studio -> {
+            val studioStack by activeChild.component.childStack.subscribeAsState()
+            studioStack.active.instance is StudioComponent.Child.Home
+        }
+        is RootComponent.Child.Train -> {
+            val trainStack by activeChild.component.childStack.subscribeAsState()
+            trainStack.active.instance is TrainComponent.Child.Home
+        }
+        else -> true
     }
 
     Scaffold(

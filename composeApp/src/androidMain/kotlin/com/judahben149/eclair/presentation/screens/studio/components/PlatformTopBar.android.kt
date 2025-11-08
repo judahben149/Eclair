@@ -1,5 +1,6 @@
 package com.judahben149.eclair.presentation.screens.studio.components
 
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -38,6 +39,7 @@ actual fun PlatformTopBar(
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.surface,
             titleContentColor = MaterialTheme.colorScheme.onSurface
-        )
+        ),
+        windowInsets = WindowInsets(0, 0, 0, 0)
     )
 }

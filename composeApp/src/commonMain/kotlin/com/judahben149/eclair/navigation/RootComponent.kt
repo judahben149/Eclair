@@ -50,7 +50,10 @@ class DefaultRootComponent(
         componentContext: ComponentContext
     ): RootComponent.Child = when (config) {
         Config.Studio -> RootComponent.Child.Studio(
-            DefaultStudioComponent(componentContext)
+            DefaultStudioComponent(
+                componentContext = componentContext,
+                onNavigateToReview = { navigation.bringToFront(Config.Review) }
+            )
         )
         Config.Train -> RootComponent.Child.Train(
             DefaultTrainComponent(componentContext)

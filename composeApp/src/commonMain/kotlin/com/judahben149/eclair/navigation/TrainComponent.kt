@@ -15,12 +15,14 @@ interface TrainComponent {
 
     fun onCategoryClicked(category: CategoryType)
     fun onCustomLearningPathClicked()
+    fun onIdentifyEquipmentClicked()
     fun onBackClicked()
 
     sealed class Child {
         data object Home : Child()
         data class Category(val type: CategoryType) : Child()
         data object CustomLearningPath : Child()
+        data object IdentifyEquipment : Child()
     }
 }
 
@@ -56,6 +58,11 @@ class DefaultTrainComponent(
         navigation.push(Config.CustomLearningPath)
     }
 
+    @OptIn(DelicateDecomposeApi::class)
+    override fun onIdentifyEquipmentClicked() {
+        navigation.push(Config.IdentifyEquipment)
+    }
+
     override fun onBackClicked() {
         navigation.pop()
     }
@@ -67,6 +74,7 @@ class DefaultTrainComponent(
         Config.Home -> TrainComponent.Child.Home
         is Config.Category -> TrainComponent.Child.Category(config.type)
         Config.CustomLearningPath -> TrainComponent.Child.CustomLearningPath
+        Config.IdentifyEquipment -> TrainComponent.Child.IdentifyEquipment
     }
 
     @Serializable
@@ -77,5 +85,7 @@ class DefaultTrainComponent(
         data class Category(val type: CategoryType) : Config()
         @Serializable
         data object CustomLearningPath : Config()
+        @Serializable
+        data object IdentifyEquipment : Config()
     }
 }

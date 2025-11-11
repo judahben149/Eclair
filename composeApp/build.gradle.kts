@@ -46,6 +46,16 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.room.runtime.android)
+
+            // TensorFlow Lite
+            implementation(libs.tensorflow.lite)
+            implementation(libs.tensorflow.lite.support)
+
+            // CameraX
+            implementation(libs.camerax.core)
+            implementation(libs.camerax.camera2)
+            implementation(libs.camerax.lifecycle)
+            implementation(libs.camerax.view)
         }
 
         commonMain.dependencies {

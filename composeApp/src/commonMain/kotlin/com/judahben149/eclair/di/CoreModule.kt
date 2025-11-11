@@ -1,6 +1,7 @@
 package com.judahben149.eclair.di
 
 //import com.cactus.CactusLM
+import com.judahben149.eclair.core.ml.EquipmentClassifier
 import com.judahben149.eclair.core.ml.MLEngine
 import com.judahben149.eclair.core.ml.MLEngineImpl
 import com.judahben149.eclair.data.llm.LLMService
@@ -14,6 +15,7 @@ import com.judahben149.eclair.domain.usecase.ObserveAllChatsUseCase
 import com.judahben149.eclair.domain.usecase.SaveChatUseCase
 import com.judahben149.eclair.domain.usecase.SendChatMessageToLLMUseCase
 import com.judahben149.eclair.presentation.screens.chat.ChatViewModel
+import com.judahben149.eclair.presentation.screens.studio.EquipmentIdentificationViewModel
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -31,6 +33,7 @@ val useCaseModule = module {
 
 val viewModelModule = module {
     factory { ChatViewModel(get(), get(), get()) }
+    factory { EquipmentIdentificationViewModel(get()) }
 }
 
 val serviceModule = module {

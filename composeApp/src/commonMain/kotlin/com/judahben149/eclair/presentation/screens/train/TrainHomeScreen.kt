@@ -138,6 +138,7 @@ fun TrainHomeScreen(component: TrainComponent) {
 
             // Equipment Identification Card
             EquipmentIdentificationCard(
+                onClick = component::onIdentifyEquipmentClicked,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 24.dp)
@@ -343,12 +344,13 @@ private fun PatternCanvas(
 
 @Composable
 private fun EquipmentIdentificationCard(
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     Card(
         modifier = modifier
             .height(180.dp)
-            .clickable { /* TODO: Expand to fullscreen */ },
+            .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.surfaceContainerHigh
         ),

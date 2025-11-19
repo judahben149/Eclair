@@ -27,9 +27,9 @@ fun ShimmerEffect(
     if (!isLoading) return
 
     val shimmerColors = listOf(
-        Color.LightGray.copy(alpha = 0.3f),
-        Color.LightGray.copy(alpha = 0.5f),
-        Color.LightGray.copy(alpha = 0.3f)
+        Color.LightGray.copy(alpha = 0.15f),
+        Color.LightGray.copy(alpha = 0.35f),
+        Color.LightGray.copy(alpha = 0.15f)
     )
 
     val transition = rememberInfiniteTransition(label = "shimmer")
@@ -38,7 +38,7 @@ fun ShimmerEffect(
         targetValue = 1000f,
         animationSpec = infiniteRepeatable(
             animation = tween(
-                durationMillis = 1200,
+                durationMillis = 2000,
                 easing = LinearEasing
             ),
             repeatMode = RepeatMode.Restart

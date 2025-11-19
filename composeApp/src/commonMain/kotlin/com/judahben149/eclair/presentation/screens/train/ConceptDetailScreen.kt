@@ -46,6 +46,7 @@ fun ConceptDetailScreen(
     var showTableOfContents by remember { mutableStateOf(false) }
 
     Scaffold(
+        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0, 0, 0, 0),
         topBar = {
             TopAppBar(
                 title = {

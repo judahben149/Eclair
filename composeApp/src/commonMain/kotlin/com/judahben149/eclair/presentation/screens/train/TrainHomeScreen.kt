@@ -97,6 +97,7 @@ fun TrainHomeScreen(component: TrainComponent) {
 
     Scaffold(
         containerColor = backgroundColor,
+        contentWindowInsets = androidx.compose.foundation.layout.WindowInsets(0, 0, 0, 0),
         floatingActionButton = {
             FloatingActionButton(
                 onClick = component::onCustomLearningPathClicked,
@@ -114,9 +115,8 @@ fun TrainHomeScreen(component: TrainComponent) {
             modifier = Modifier
                 .fillMaxSize()
                 .padding(paddingValues)
+                .padding(top = 16.dp)
         ) {
-            Spacer(modifier = Modifier.height(24.dp))
-
             // Header
             Text(
                 text = "Train",

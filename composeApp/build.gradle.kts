@@ -61,6 +61,11 @@ kotlin {
             implementation(libs.ktor.client.okhttp)
         }
 
+        iosMain.dependencies {
+            // Ktor Client for iOS
+            implementation(libs.ktor.client.darwin)
+        }
+
         commonMain.dependencies {
             implementation(compose.runtime)
             implementation(compose.foundation)

@@ -5,12 +5,18 @@ import androidx.room.Database
 import androidx.room.RoomDatabase
 import androidx.room.RoomDatabaseConstructor
 import com.judahben149.eclair.data.local.dto.ChatMessageDto
+import com.judahben149.eclair.data.local.dto.ConceptEntity
 import com.judahben149.eclair.data.local.dto.ConversationDto
 
 internal expect object EclairDatabaseCtor : RoomDatabaseConstructor<EclairDatabase>
 
-@Database(entities = [ConversationDto::class, ChatMessageDto::class], version = 1)
+@Database(
+    entities = [ConversationDto::class, ChatMessageDto::class, ConceptEntity::class],
+    version = 2,
+    exportSchema = true
+)
 @ConstructedBy(EclairDatabaseCtor::class)
 abstract class EclairDatabase: RoomDatabase() {
     abstract fun chatDao(): ChatDao
+    abstract fun conceptDao(): ConceptDao
 }

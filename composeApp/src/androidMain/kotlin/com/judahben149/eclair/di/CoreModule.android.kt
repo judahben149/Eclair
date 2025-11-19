@@ -13,6 +13,8 @@ import org.koin.dsl.module
 
 fun platformModule(context: Context) = module {
     single<EclairDatabase> { getEclairDatabaseBuilder(context) }
+    single { get<EclairDatabase>().chatDao() }
+    single { get<EclairDatabase>().conceptDao() }
     single<Platform> { Platform(androidApplication()) }
     single { EquipmentClassifier(androidContext()) }
 }

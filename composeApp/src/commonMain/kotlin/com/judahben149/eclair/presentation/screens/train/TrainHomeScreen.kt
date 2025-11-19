@@ -144,6 +144,35 @@ fun TrainHomeScreen(component: TrainComponent) {
                     .padding(horizontal = 24.dp)
             )
 
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Concept Test Card (TEMPORARY - for testing API integration)
+            Card(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(120.dp)
+                    .padding(horizontal = 24.dp)
+                    .clickable { component.onConceptClicked(1) }, // Test with concept ID 1
+                colors = CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                ),
+                elevation = CardDefaults.cardElevation(
+                    defaultElevation = 2.dp
+                ),
+                shape = RoundedCornerShape(16.dp)
+            ) {
+                Box(
+                    modifier = Modifier.fillMaxSize(),
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = "View Concept (Test)",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onPrimaryContainer
+                    )
+                }
+            }
+
             Spacer(modifier = Modifier.height(24.dp))
         }
     }

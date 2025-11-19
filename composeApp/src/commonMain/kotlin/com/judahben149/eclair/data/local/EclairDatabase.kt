@@ -12,8 +12,7 @@ internal expect object EclairDatabaseCtor : RoomDatabaseConstructor<EclairDataba
 
 @Database(
     entities = [ConversationDto::class, ChatMessageDto::class, ConceptEntity::class],
-    version = 2,
-    exportSchema = true
+    version = 1
 )
 @ConstructedBy(EclairDatabaseCtor::class)
 abstract class EclairDatabase: RoomDatabase() {

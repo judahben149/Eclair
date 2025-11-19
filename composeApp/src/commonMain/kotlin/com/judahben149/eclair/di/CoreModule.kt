@@ -22,6 +22,7 @@ import com.judahben149.eclair.domain.usecase.SendChatMessageToLLMUseCase
 import com.judahben149.eclair.presentation.screens.chat.ChatViewModel
 import com.judahben149.eclair.presentation.screens.studio.EquipmentIdentificationViewModel
 import com.judahben149.eclair.presentation.screens.train.ConceptDetailViewModel
+import com.judahben149.eclair.presentation.screens.train.TrainHomeViewModel
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.bind
 import org.koin.dsl.module
@@ -42,6 +43,7 @@ val viewModelModule = module {
     factory { ChatViewModel(get(), get(), get()) }
     factory { EquipmentIdentificationViewModel(get()) }
     factory { (conceptId: Int) -> ConceptDetailViewModel(get(), conceptId) }
+    factory { TrainHomeViewModel(get()) }
 }
 
 val serviceModule = module {

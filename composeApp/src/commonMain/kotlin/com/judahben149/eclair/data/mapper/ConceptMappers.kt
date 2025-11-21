@@ -1,7 +1,9 @@
 package com.judahben149.eclair.data.mapper
 
 import com.judahben149.eclair.data.local.dto.ConceptEntity
+import com.judahben149.eclair.data.local.dto.ConceptListItemEntity
 import com.judahben149.eclair.data.remote.dto.Concept
+import com.judahben149.eclair.data.remote.dto.ConceptListItem
 import com.judahben149.eclair.data.remote.dto.Section
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
@@ -34,5 +36,30 @@ fun ConceptEntity.toConcept(): Concept {
         } else {
             emptyList()
         }
+    )
+}
+
+// ConceptListItem mappers
+fun ConceptListItem.toEntity(): ConceptListItemEntity {
+    return ConceptListItemEntity(
+        id = id,
+        title = title,
+        description = description,
+        displayOrder = displayOrder,
+        published = published,
+        updatedAt = updatedAt,
+        version = version
+    )
+}
+
+fun ConceptListItemEntity.toConceptListItem(): ConceptListItem {
+    return ConceptListItem(
+        id = id,
+        title = title,
+        description = description,
+        displayOrder = displayOrder,
+        published = published,
+        updatedAt = updatedAt,
+        version = version
     )
 }

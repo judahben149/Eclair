@@ -43,7 +43,7 @@ val viewModelModule = module {
     factory { ChatViewModel(get(), get(), get()) }
     factory { EquipmentIdentificationViewModel(get()) }
     factory { (conceptId: Int) -> ConceptDetailViewModel(get(), conceptId) }
-    factory { TrainHomeViewModel(get()) }
+    factory { TrainHomeViewModel(get(), get()) }
 }
 
 val serviceModule = module {

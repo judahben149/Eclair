@@ -12,6 +12,7 @@ fun platformModule() = module {
     single<EclairDatabase> { getEclairDatabaseBuilder() }
     single { get<EclairDatabase>().chatDao() }
     single { get<EclairDatabase>().conceptDao() }
+    single { get<EclairDatabase>().conceptListDao() }
     single<Platform> { Platform() }
     single { EquipmentClassifier() }
 }

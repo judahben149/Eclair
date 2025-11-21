@@ -59,37 +59,37 @@ fun SimpleMarkdownText(
                     )
                 }
 
-                // Headers
+                // Headers (sized smaller to distinguish from section headings)
                 line.startsWith("# ") -> {
                     Text(
                         text = line.removePrefix("# "),
-                        style = MaterialTheme.typography.headlineLarge,
+                        style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(vertical = 4.dp)
+                        modifier = Modifier.padding(top = 12.dp, bottom = 4.dp)
                     )
                 }
                 line.startsWith("## ") -> {
                     Text(
                         text = line.removePrefix("## "),
-                        style = MaterialTheme.typography.headlineMedium,
+                        style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(vertical = 4.dp)
+                        modifier = Modifier.padding(top = 10.dp, bottom = 4.dp)
                     )
                 }
                 line.startsWith("### ") -> {
                     Text(
                         text = line.removePrefix("### "),
-                        style = MaterialTheme.typography.headlineSmall,
+                        style = MaterialTheme.typography.titleSmall,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(vertical = 4.dp)
+                        modifier = Modifier.padding(top = 8.dp, bottom = 4.dp)
                     )
                 }
                 line.startsWith("#### ") -> {
                     Text(
                         text = line.removePrefix("#### "),
-                        style = MaterialTheme.typography.titleLarge,
+                        style = MaterialTheme.typography.bodyLarge,
                         fontWeight = FontWeight.Bold,
-                        modifier = Modifier.padding(vertical = 4.dp)
+                        modifier = Modifier.padding(top = 6.dp, bottom = 4.dp)
                     )
                 }
 

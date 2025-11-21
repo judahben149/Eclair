@@ -1,5 +1,6 @@
 package com.judahben149.eclair.presentation.screens.train.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -19,6 +20,7 @@ import coil3.compose.AsyncImagePainter
 @Composable
 fun ConceptImage(
     imageUrl: String,
+    onClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     var isLoading by remember { mutableStateOf(true) }
@@ -29,7 +31,8 @@ fun ConceptImage(
             contentDescription = "Content image",
             modifier = Modifier
                 .fillMaxWidth()
-                .clip(RoundedCornerShape(8.dp)),
+                .clip(RoundedCornerShape(8.dp))
+                .clickable(onClick = onClick),
             contentScale = ContentScale.Fit,
             onState = { state ->
                 isLoading = state is AsyncImagePainter.State.Loading

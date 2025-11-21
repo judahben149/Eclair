@@ -18,7 +18,7 @@ internal expect object EclairDatabaseCtor : RoomDatabaseConstructor<EclairDataba
         ConceptEntity::class,
         ConceptListItemEntity::class
     ],
-    version = 2
+    version = 1
 )
 @ConstructedBy(EclairDatabaseCtor::class)
 abstract class EclairDatabase: RoomDatabase() {

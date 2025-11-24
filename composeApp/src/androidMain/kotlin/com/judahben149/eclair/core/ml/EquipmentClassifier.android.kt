@@ -23,10 +23,9 @@ actual class EquipmentClassifier(private val context: Context) {
     private var isInitialized = false
 
     companion object {
-        private const val MODEL_NAME = "equipment_classifier.tflite"
-        private const val EQUIPMENT_LABELS_NAME = "equipment_labels.txt"
+        private const val MODEL_NAME = "equipment_classifier2.tflite"
+        private const val EQUIPMENT_LABELS_NAME = "lighting_labels.txt"
         private const val IMAGENET_LABELS_NAME = "imagenet_labels.txt"
-        private const val INPUT_SIZE = 224
         private const val CONFIDENCE_THRESHOLD = 0.7f
         private const val MAX_ALTERNATIVES = 3
     }
@@ -158,65 +157,86 @@ actual class EquipmentClassifier(private val context: Context) {
             val outputShape = outputTensor.shape()
             val inputType = inputTensor.dataType()
             val outputType = outputTensor.dataType()
-            val numClasses = outputShape[1]
 
             "Input: shape=${inputShape.contentToString()}, type=$inputType".logIt("Classifier")
             "Output: shape=${outputShape.contentToString()}, type=$outputType".logIt("Classifier")
+
+            // Get the expected input size from the model
+            val modelInputSize = inputShape[1]  // Assumes [1, height, width, 3]
+            "Model expects input size: ${modelInputSize}x${modelInputSize}".logIt("Classifier")
+
+            // Determine number of classes from output shape
+            val numClasses = when (outputShape.size) {
+                2 -> outputShape[1]  // Classification: [1, num_classes]
+                3 -> {
+                    // Detection model: [1, num_classes, num_boxes] or similar
+                    "ERROR: This appears to be a detection model, not classification!".logIt("Classifier")
+                    "Expected output shape: [1, num_classes]".logIt("Classifier")
+                    "Got output shape: ${outputShape.contentToString()}".logIt("Classifier")
+                    return null
+                }
+                else -> {
+                    "ERROR: Unexpected output shape: ${outputShape.contentToString()}".logIt("Classifier")
+                    return null
+                }
+            }
+
             "Model expects $numClasses output classes, we have ${labels.size} labels".logIt("Classifier")
 
-            // Preprocess image
+            // Preprocess image - use the size the model expects
             "Preprocessing image...".logIt("Classifier")
-            val imageProcessor = ImageProcessor.Builder()
-                .add(ResizeOp(INPUT_SIZE, INPUT_SIZE, ResizeOp.ResizeMethod.BILINEAR))
-                .build()
 
-            var tensorImage = TensorImage.fromBitmap(bitmap)
-            tensorImage = imageProcessor.process(tensorImage)
-            "Image preprocessed to ${INPUT_SIZE}x${INPUT_SIZE}".logIt("Classifier")
+            // Resize bitmap to model input size
+            val resizedBitmap = Bitmap.createScaledBitmap(
+                bitmap,
+                modelInputSize,
+                modelInputSize,
+                true
+            )
+            "Image preprocessed to ${modelInputSize}x${modelInputSize}".logIt("Classifier")
+
+            // Convert to float array - NO NORMALIZATION (YOLOv11 TFLite expects raw pixel values 0-255)
+            val inputArray = Array(1) { Array(modelInputSize) { Array(modelInputSize) { FloatArray(3) } } }
+
+            for (y in 0 until modelInputSize) {
+                for (x in 0 until modelInputSize) {
+                    val pixel = resizedBitmap.getPixel(x, y)
+                    // Extract RGB as raw values (0-255)
+                    inputArray[0][y][x][0] = ((pixel shr 16) and 0xFF).toFloat()  // R
+                    inputArray[0][y][x][1] = ((pixel shr 8) and 0xFF).toFloat()   // G
+                    inputArray[0][y][x][2] = (pixel and 0xFF).toFloat()           // B
+                }
+            }
+            "Input array created (raw pixel values 0-255)".logIt("Classifier")
 
             // Prepare output buffer based on output type
             val isQuantized = outputType.toString().contains("UINT8")
-            val outputBuffer = if (isQuantized) {
-                "Using UINT8 quantized output".logIt("Classifier")
-                ByteBuffer.allocateDirect(numClasses).apply {
-                    order(ByteOrder.nativeOrder())
-                }
-            } else {
-                "Using FLOAT32 output".logIt("Classifier")
-                ByteBuffer.allocateDirect(numClasses * 4).apply {
-                    order(ByteOrder.nativeOrder())
-                }
-            }
+            val outputArray = Array(1) { FloatArray(numClasses) }
 
             // Run inference
             "Running inference...".logIt("Classifier")
-            interpreter.run(tensorImage.buffer, outputBuffer)
+            interpreter.run(inputArray, outputArray)
             "Inference completed successfully".logIt("Classifier")
 
-            // Process results based on output type
-            outputBuffer.rewind()
-            val probabilities = if (isQuantized) {
-                // Convert uint8 (0-255) to float (0.0-1.0)
-                "Converting quantized output to probabilities".logIt("Classifier")
-                val quantizedOutput = ByteArray(numClasses)
-                outputBuffer.get(quantizedOutput)
-                FloatArray(numClasses) { i ->
-                    (quantizedOutput[i].toInt() and 0xFF) / 255.0f
-                }
-            } else {
-                FloatArray(numClasses).also { outputBuffer.asFloatBuffer().get(it) }
-            }
-
+            // Get probabilities from output array
+            val probabilities = outputArray[0]
             "Got ${probabilities.size} probabilities".logIt("Classifier")
 
-            // Log top 5 predictions
+            // Log top 5 predictions with labels
             val topPredictions = probabilities
                 .mapIndexed { index, prob -> index to prob }
                 .sortedByDescending { it.second }
                 .take(5)
 
             topPredictions.forEachIndexed { i, (idx, prob) ->
-                "Top ${i + 1}: class=$idx, confidence=$prob".logIt("Classifier")
+                val label = if (idx < labels.size) labels[idx] else "unknown"
+                "Top ${i + 1}: $label (class=$idx), confidence=${(prob * 100).toInt()}%".logIt("Classifier")
+            }
+
+            // Log confidence threshold check
+            val topConf = topPredictions.first().second
+            if (topConf < CONFIDENCE_THRESHOLD) {
+                "⚠️ Top confidence ($topConf) below threshold ($CONFIDENCE_THRESHOLD)".logIt("Classifier")
             }
 
             "Processing inference results...".logIt("Classifier")

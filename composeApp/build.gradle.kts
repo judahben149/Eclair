@@ -46,6 +46,24 @@ kotlin {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
             implementation(libs.room.runtime.android)
+
+            // TensorFlow Lite
+            implementation(libs.tensorflow.lite)
+            implementation(libs.tensorflow.lite.support)
+
+            // CameraX
+            implementation(libs.camerax.core)
+            implementation(libs.camerax.camera2)
+            implementation(libs.camerax.lifecycle)
+            implementation(libs.camerax.view)
+
+            // Ktor Client for Android
+            implementation(libs.ktor.client.okhttp)
+        }
+
+        iosMain.dependencies {
+            // Ktor Client for iOS
+            implementation(libs.ktor.client.darwin)
         }
 
         commonMain.dependencies {
@@ -73,6 +91,18 @@ kotlin {
             implementation(libs.decompose)
             implementation(libs.decompose.compose)
             implementation(libs.kotlinx.serialization.core)
+
+            // Ktor Client
+            implementation(libs.ktor.client.core)
+            implementation(libs.ktor.client.content.negotiation)
+            implementation(libs.ktor.serialization.kotlinx.json)
+
+            // Coil for image loading
+            implementation(libs.coil.compose)
+            implementation(libs.coil.network.ktor3)
+
+            // Markdown rendering - TODO: Add back when compatible version is available
+            // implementation(libs.compose.markdown)
         }
 
         commonTest.dependencies {

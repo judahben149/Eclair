@@ -1,8 +1,8 @@
 {
   "formatVersion": 1,
   "database": {
-    "version": 1,
-    "identityHash": "c249ad56b62ac33c2022ecac48abae71",
+    "version": 3,
+    "identityHash": "3f38bdf4b15e42b7ee975844ad2d2fe3",
     "entities": [
       {
         "tableName": "ConversationDto",
@@ -137,7 +137,7 @@
       },
       {
         "tableName": "concept_list_items",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT, `displayOrder` INTEGER, `published` INTEGER, `updatedAt` TEXT NOT NULL, `version` INTEGER NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER NOT NULL, `title` TEXT NOT NULL, `description` TEXT, `displayOrder` INTEGER, `published` INTEGER, `updatedAt` TEXT NOT NULL, `version` INTEGER NOT NULL, `cachedAt` INTEGER NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -177,6 +177,12 @@
             "columnName": "version",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "cachedAt",
+            "columnName": "cachedAt",
+            "affinity": "INTEGER",
+            "notNull": true
           }
         ],
         "primaryKey": {
@@ -189,7 +195,7 @@
     ],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'c249ad56b62ac33c2022ecac48abae71')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '3f38bdf4b15e42b7ee975844ad2d2fe3')"
     ]
   }
 }
